@@ -1,0 +1,17 @@
+# Perhaps there is already a 'Python' way to create this? if not:
+# simple Bash extract of supported sensors; generate for your install by changing the path to your 'sdr.py' file...
+cat /usr/share/weewx/user/sdr.py | grep class | grep Packet | egrep -v " Packet| Based" | sed -e 's/Pack/ /g'| awk '{printf "%3d | %-20s", NR, $2 ; if (NR%5 == 0) printf "\n"} END {printf "\n"}'
+  1 | AcuriteAtlas          2 | AcuriteTower          3 | Acurite5n1            4 | AcuriteTower          5 | Acurite5n1          
+  6 | Acurite606TX          7 | Acurite606TX          8 | AcuriteRain899        9 | Acurite986           10 | AcuriteLightning    
+ 11 | Acurite00275M        12 | AcuriteWT450         13 | AlectoV1Temperature  14 | AlectoV1Wind         15 | AlectoV1Rain        
+ 16 | AmbientF007TH        17 | AmbientWH31E         18 | CalibeurRF104        19 | EcoWittWH40          20 | FOWH1080            
+ 21 | FOWHx080             22 | FOWH3080             23 | FOWH24               24 | FOWH24B              25 | FOWH25              
+ 26 | FOWH25B              27 | FOWH2                28 | FOWH32B              29 | FOWH5                30 | FOWH51              
+ 31 | FOWH65B              32 | FOWH65BAlt           33 | FOWH0290             34 | FOWH31L              35 | HidekiTS04          
+ 36 | HidekiWind           37 | HidekiRain           38 | HolmanWS5029         39 | InFactoryTH          40 | LaCrosseBreezePro   
+ 41 | LaCrosseWS           42 | LaCrosseTX141THBv2   43 | LaCrosseTX           44 | LaCrosseTX18         45 | RubicsonTemp        
+ 46 | OSPCR800             47 | OSBTHR918            48 | OSBTHR968            49 | OSTHGR122N           50 | OSTHGR810           
+ 51 | OSTHR128             52 | OSTHR228N            53 | OSUV800              54 | OSUVR128             55 | OSWGR800            
+ 56 | OSTHN802             57 | OSBTHGN129           58 | OSTHGR968            59 | OSRGR968             60 | Prologue            
+ 61 | PrologueTH           62 | NexusTemperature     63 | Bresser5in1          64 | Bresser6in1          65 | BresserProRainGauge 
+ 66 | SpringfieldTM        67 | TFATwinPlus303049    68 | TSFT002              69 | WS2032               70 | WT0124     
