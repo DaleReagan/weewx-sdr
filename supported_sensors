@@ -30,7 +30,10 @@ AcuriteTowerPacketV2
 AmbientWH31EPacket 
 EcoWittWH40Packet 
 
-### decoded
+### decoded - this is what you 'map' sensors from; i.e. 
+# Weewx.Field = Rtl_Sdr_Sensor_ID 
+# outHumidity = humidity.0921.Acurite5n1PacketV2
+
   1 | Acurite5n1PacketV2        |  humidity       |   0921 |  humidity.0921.Acurite5n1PacketV2
   2 | Acurite5n1PacketV2        |  rain_total     |   0921 |  rain_total.0921.Acurite5n1PacketV2
   3 | Acurite5n1PacketV2        |  temperature    |   0921 |  temperature.0921.Acurite5n1PacketV2
