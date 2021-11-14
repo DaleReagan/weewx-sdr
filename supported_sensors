@@ -1,17 +1,43 @@
-# Perhaps there is already a 'Python' way to create this? if not:
-# simple Bash extract of supported sensors; generate for your install by changing the path to your 'sdr.py' file...
-cat /usr/share/weewx/user/sdr.py | grep class | grep Packet | egrep -v " Packet| Based" | sed -e 's/Pack/ /g'| awk '{printf "%3d | %-20s", NR, $2 ; if (NR%5 == 0) printf "\n"} END {printf "\n"}'
-  1 | AcuriteAtlas          2 | AcuriteTower          3 | Acurite5n1            4 | AcuriteTower          5 | Acurite5n1          
-  6 | Acurite606TX          7 | Acurite606TX          8 | AcuriteRain899        9 | Acurite986           10 | AcuriteLightning    
- 11 | Acurite00275M        12 | AcuriteWT450         13 | AlectoV1Temperature  14 | AlectoV1Wind         15 | AlectoV1Rain        
- 16 | AmbientF007TH        17 | AmbientWH31E         18 | CalibeurRF104        19 | EcoWittWH40          20 | FOWH1080            
- 21 | FOWHx080             22 | FOWH3080             23 | FOWH24               24 | FOWH24B              25 | FOWH25              
- 26 | FOWH25B              27 | FOWH2                28 | FOWH32B              29 | FOWH5                30 | FOWH51              
- 31 | FOWH65B              32 | FOWH65BAlt           33 | FOWH0290             34 | FOWH31L              35 | HidekiTS04          
- 36 | HidekiWind           37 | HidekiRain           38 | HolmanWS5029         39 | InFactoryTH          40 | LaCrosseBreezePro   
- 41 | LaCrosseWS           42 | LaCrosseTX141THBv2   43 | LaCrosseTX           44 | LaCrosseTX18         45 | RubicsonTemp        
- 46 | OSPCR800             47 | OSBTHR918            48 | OSBTHR968            49 | OSTHGR122N           50 | OSTHGR810           
- 51 | OSTHR128             52 | OSTHR228N            53 | OSUV800              54 | OSUVR128             55 | OSWGR800            
- 56 | OSTHN802             57 | OSBTHGN129           58 | OSTHGR968            59 | OSRGR968             60 | Prologue            
- 61 | PrologueTH           62 | NexusTemperature     63 | Bresser5in1          64 | Bresser6in1          65 | BresserProRainGauge 
- 66 | SpringfieldTM        67 | TFATwinPlus303049    68 | TSFT002              69 | WS2032               70 | WT0124     
+# Perhaps there is already a 'Python' way to create this? 
+Hmm, helps if you read all the docs...
+
+sudo PYTHONPATH=/usr/share/weewx python /usr/share/weewx/user/sdr.py --help
+
+sudo PYTHONPATH=/usr/share/weewx python /usr/share/weewx/user/sdr.py --action=list-supported
+sudo PYTHONPATH=/usr/share/weewx python /usr/share/weewx/user/sdr.py --action=list-supported | egrep -vi "known" | awk -F "'" '{printf "%3d | %-25s = %-34s", NR, $1, $2 ; if (NR%2 == 0) printf "\n"} END {printf "\n"}'
+
+  1 | Acurite00275MPacket       = 00275rm                             2 | Acurite5n1Packet          = Acurite 5n1 sensor                
+  3 | Acurite5n1PacketV2        = Acurite-5n1                         4 | Acurite606TXPacket        = Acurite-606TX                     
+  5 | Acurite606TXPacketV2      = Acurite-606TX                       6 | Acurite986Packet          = Acurite-986                       
+  7 | AcuriteAtlasPacket        = Acurite-Atlas                       8 | AcuriteLightningPacket    = Acurite-6045M                     
+  9 | AcuriteRain899Packet      = Acurite-Rain899                    10 | AcuriteTowerPacket        = Acurite tower sensor              
+ 11 | AcuriteTowerPacketV2      = Acurite-Tower                      12 | AcuriteWT450Packet        = WT450 sensor                      
+ 13 | AlectoV1RainPacket        = AlectoV1 Rain Sensor               14 | AlectoV1TemperaturePacket  = AlectoV1 Temperature Sensor       
+ 15 | AlectoV1WindPacket        = AlectoV1 Wind Sensor               16 | AmbientF007THPacket       = Ambientweather-F007TH             
+ 17 | AmbientWH31EPacket        = AmbientWeather-WH31E               18 | Bresser5in1Packet         = Bresser-5in1                      
+ 19 | Bresser6in1Packet         = Bresser-6in1                       20 | BresserProRainGaugePacket  = Bresser-ProRainGauge              
+ 21 | CalibeurRF104Packet       = Calibeur RF-104                    22 | EcoWittWH40Packet         = EcoWitt-WH40                      
+ 23 | FOWH0290Packet            = Fine Offset Electronics, WH0290    24 | FOWH1080Packet            = Fine Offset WH1080 weather station
+ 25 | FOWH24BPacket             = Fineoffset-WH24                    26 | FOWH24Packet              = Fine Offset WH24                  
+ 27 | FOWH25BPacket             = Fineoffset-WH25                    28 | FOWH25Packet              = Fineoffset-WH25                   
+ 29 | FOWH2Packet               = Fine Offset Electronics, WH2       30 | FOWH3080Packet            = Fine Offset Electronics WH3080 Weather Station
+ 31 | FOWH31LPacket             = FineOffset-WH31L                   32 | FOWH32BPacket             = Fineoffset-WH32B                  
+ 33 | FOWH51Packet              = Fineoffset-WH51                    34 | FOWH5Packet               = Fine Offset WH5 sensor            
+ 35 | FOWH65BAltPacket          = Fineoffset-WH65B                   36 | FOWH65BPacket             = Fine Offset WH65B                 
+ 37 | FOWHx080Packet            = Fineoffset-WHx080                  38 | HidekiRainPacket          = Hideki-Rain                       
+ 39 | HidekiTS04Packet          = Hideki-TS04                        40 | HidekiWindPacket          = Hideki-Wind                       
+ 41 | HolmanWS5029Packet        = Holman Industries WS5029 weather station 42 | InFactoryTHPacket         = nFactory-TH                       
+ 43 | LaCrosseBreezeProPacket   = LaCrosse-BreezePro                 44 | LaCrosseTX141THBv2Packet  = LaCrosse-TX141THBv2               
+ 45 | LaCrosseTX18Packet        = LaCrosse-WS3600                    46 | LaCrosseTXPacket          = LaCrosse TX Sensor                
+ 47 | LaCrosseWSPacket          = LaCrosse WS                        48 | NexusTemperaturePacket    = Nexus Temperature                 
+ 49 | OSBTHGN129Packet          = BTHGN129                           50 | OSBTHR918Packet           = BTHR918                           
+ 51 | OSBTHR968Packet           = BHTR968                            52 | OSPCR800Packet            = Oregon-PCR800                     
+ 53 | OSRGR968Packet            = RGR968                             54 | OSTHGR122NPacket          = THGR122N                          
+ 55 | OSTHGR810Packet           = THGR810                            56 | OSTHGR968Packet           = THGR968                           
+ 57 | OSTHN802Packet            = THN802                             58 | OSTHR128Packet            = OSv1 Temperature Sensor           
+ 59 | OSTHR228NPacket           = Thermo Sensor THR228N              60 | OSUV800Packet             = UV800                             
+ 61 | OSUVR128Packet            = UVR128                             62 | OSWGR800Packet            = WGR800                            
+ 63 | ProloguePacket            = Prologue sensor                    64 | PrologueTHPacket          = Prologue-TH                       
+ 65 | RubicsonTempPacket        = Rubicson Temperature Sensor        66 | SpringfieldTMPacket       = Springfield Temperature & Moisture
+ 67 | TFATwinPlus303049Packet   = TFA-Twin-Plus-30.3049              68 | TSFT002Packet             = TS-FT002                          
+ 69 | WS2032Packet              = WS2032                             70 | WT0124Packet              = WT0124 Pool Thermometer
