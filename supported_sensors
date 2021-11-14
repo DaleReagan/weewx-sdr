@@ -1,8 +1,68 @@
-# Perhaps there is already a 'Python' way to create this? 
-Hmm, helps if you read all the docs...
+## Hmm, helps if you read all the docs...
+For your SDR sensors - you will need to convert some IDs to Hex,  i.e.
 
+Below I captured data from 11 different devices on two frequencies.
+
+# set multiple frequencies using a hop every 60 seconds for duration of 130 seconds
+sudo PYTHONPATH=/usr/share/weewx python /usr/share/weewx/user/sdr.py --cmd="/usr/local/bin/rtl_433 -d 1 -M utc -F json -H 60 -f 915.230MHz -f 433.920Mhz -T 130"
+
+###############################
+     | Sensor                  |   ID   | HxID |CH | Msg type
+-----|-------------------------|--------|------|---|----
+  1  | Acurite-5n1             |   2337 | 0921 | A | 56
+  1a | Acurite-5n1             |   2337 | 0921 | A | 49
+  2  | Acurite-6045M           |    105 | 0069 | B
+  3  | Acurite-Tower           |  11964 | 2ebc | B
+  4  | Acurite-Tower           |    414 | 019e | B
+  5  | Acurite-Tower           |   8010 | 1f4a | C
+  6  | Acurite-Tower           |   8551 | 2167 | A
+  7  | AmbientWeather-WH31E    |    106 | 006a | 4
+  8  | AmbientWeather-WH31E    |    180 | 00b4 | 2
+  9  | AmbientWeather-WH31E    |    197 | 00c5 | 1
+ 10  | AmbientWeather-WH31E    |     86 | 0056 | 3
+ 11  | Bresser-3CH             |    234 | 00ea | 3
+ 12  | EcoWitt-WH40            |   5390 | 150e | 
+
+### weewx sdr parsed 5 unique devices
+Acurite5n1PacketV2 
+AcuriteLightningPacket 
+AcuriteTowerPacketV2 
+AmbientWH31EPacket 
+EcoWittWH40Packet 
+
+### decoded
+  1 | Acurite5n1PacketV2        |  humidity       |   0921 |  humidity.0921.Acurite5n1PacketV2
+  2 | Acurite5n1PacketV2        |  rain_total     |   0921 |  rain_total.0921.Acurite5n1PacketV2
+  3 | Acurite5n1PacketV2        |  temperature    |   0921 |  temperature.0921.Acurite5n1PacketV2
+
+  4 | AcuriteLightningPacket    |  distance       |   0069 |  distance.0069.AcuriteLightningPacket
+  5 | AcuriteLightningPacket    |  humidity       |   0069 |  humidity.0069.AcuriteLightningPacket
+  6 | AcuriteLightningPacket    |  strikes_total  |   0069 |  strikes_total.0069.AcuriteLightningPacket
+  7 | AcuriteLightningPacket    |  temperature    |   0069 |  temperature.0069.AcuriteLightningPacket
+
+  8 | AcuriteTowerPacketV2      |  humidity       |   019E |  humidity.019E.AcuriteTowerPacketV2
+  9 | AcuriteTowerPacketV2      |  humidity       |   1F4A |  humidity.1F4A.AcuriteTowerPacketV2
+ 10 | AcuriteTowerPacketV2      |  humidity       |   2167 |  humidity.2167.AcuriteTowerPacketV2
+ 11 | AcuriteTowerPacketV2      |  humidity       |   2EBC |  humidity.2EBC.AcuriteTowerPacketV2
+ 12 | AcuriteTowerPacketV2      |  temperature    |   019E |  temperature.019E.AcuriteTowerPacketV2
+ 13 | AcuriteTowerPacketV2      |  temperature    |   1F4A |  temperature.1F4A.AcuriteTowerPacketV2
+ 14 | AcuriteTowerPacketV2      |  temperature    |   2167 |  temperature.2167.AcuriteTowerPacketV2
+ 15 | AcuriteTowerPacketV2      |  temperature    |   2EBC |  temperature.2EBC.AcuriteTowerPacketV2
+
+ 16 | AmbientWH31EPacket        |  humidity       |    106 |  humidity.106.AmbientWH31EPacket
+ 17 | AmbientWH31EPacket        |  humidity       |    180 |  humidity.180.AmbientWH31EPacket
+ 18 | AmbientWH31EPacket        |  humidity       |    197 |  humidity.197.AmbientWH31EPacket
+ 19 | AmbientWH31EPacket        |  humidity       |     86 |  humidity.86.AmbientWH31EPacket
+ 20 | AmbientWH31EPacket        |  temperature    |    106 |  temperature.106.AmbientWH31EPacket
+ 21 | AmbientWH31EPacket        |  temperature    |    180 |  temperature.180.AmbientWH31EPacket
+ 22 | AmbientWH31EPacket        |  temperature    |    197 |  temperature.197.AmbientWH31EPacket
+ 23 | AmbientWH31EPacket        |  temperature    |     86 |  temperature.86.AmbientWH31EPacket
+
+ 24 | EcoWittWH40Packet         |  rain_total     |   5390 |  rain_total.5390.EcoWittWH40Packet
+
+
+## list supported rtl_433 devices in the sdr.py driver
 sudo PYTHONPATH=/usr/share/weewx python /usr/share/weewx/user/sdr.py --help
-
 sudo PYTHONPATH=/usr/share/weewx python /usr/share/weewx/user/sdr.py --action=list-supported
 sudo PYTHONPATH=/usr/share/weewx python /usr/share/weewx/user/sdr.py --action=list-supported | egrep -vi "known" | awk -F "'" '{printf "%3d | %-25s = %-34s", NR, $1, $2 ; if (NR%2 == 0) printf "\n"} END {printf "\n"}'
 
